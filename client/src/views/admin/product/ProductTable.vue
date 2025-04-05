@@ -291,7 +291,7 @@ const sortBy = (column) => {
                             :src="
                                 item?.imageProducts.length > 0
                                     ? item?.imageProducts[0]?.url
-                                    : require('@/assets/imgs/TMart-logo.png')
+                                    : '@/assets/imgs/TMart-logo.png'
                             "
                             alt=""
                             style="width: 55px; height: 55px"

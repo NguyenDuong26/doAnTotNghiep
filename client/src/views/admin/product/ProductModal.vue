@@ -4,7 +4,7 @@ import { toastify } from "@/helpers/toastify";
 import { useCategoryStore } from "@/stores/category";
 import { useProductStore } from "@/stores/product";
 import _ from "lodash";
-import { defineEmits, nextTick, reactive, ref, defineProps, toRaw } from "vue";
+import { nextTick, reactive, ref, toRaw } from "vue";
 
 const props = defineProps({
     statusForm: String,
