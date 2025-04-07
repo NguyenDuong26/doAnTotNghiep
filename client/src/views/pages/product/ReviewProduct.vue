@@ -9,7 +9,7 @@
                 <div class="filter-title">
                     <label
                         >{{
-                            feedbackList.length == 0
+                            feedbackList?.length == 0
                                 ? 0
                                 : Number(props.avgStar)
                         }}/5</label
