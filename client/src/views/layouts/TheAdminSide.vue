@@ -17,8 +17,8 @@ const handleLogout = () => {
             <div class="sidebar-content">
                 <div class="logo">
                     <router-link :to="{ name: 'HomePage' }">
-                        <span class="t">T</span>
-                        <span class="mart">Mart</span>
+                        <span class="rpy">RPY</span>
+                        <span class="shop">Shop</span>
                     </router-link>
                 </div>
                 <ul>
@@ -104,12 +104,12 @@ const handleLogout = () => {
     padding: 5px 0;
 }
 
-.admin-page .sidebar .logo > a > .t {
-    color: var(--color-orange);
+.admin-page .sidebar .logo > a > .rpy {
+    color: var(--color-white);
     font-size: 2rem;
 }
 
-.admin-page .sidebar .logo > a > .mart {
+.admin-page .sidebar .logo > a > .shop {
     color: var(--color-white);
     font-size: 2rem;
     font-style: italic;

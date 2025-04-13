@@ -1,9 +1,9 @@
 <template>
     <header id="header">
         <div class="logo">
-            <router-link :to="{ name: 'HomePage' }"
-                ><span>T</span>Mart</router-link
-            >
+            <router-link :to="{ name: 'HomePage' }">
+                <span>RPY</span>Shop
+            </router-link>
         </div>
         <div class="search-box">
             <div class="search-box-item">
@@ -218,26 +218,26 @@ export default {
 }
 
 #header .logo {
-    width: 10%;
+    width: 12%;
 }
 
 #header .logo > a,
 #header .logo > a > span {
     font-family: cursive;
-    font-size: 3rem;
-    color: var(--color-primary);
+    font-size: 2.3rem;
+    color: #2196f3;
     cursor: pointer;
     text-decoration: none;
     font-weight: 600;
 }
 
 #header .logo > a > span {
-    color: var(--color-orange);
+    color: #212121;
 }
 
 #header .search-box {
     display: flex;
-    width: 62%;
+    width: 60%;
     justify-content: center;
     align-items: center;
 }
