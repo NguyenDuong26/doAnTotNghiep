@@ -38,7 +38,7 @@ const onSubmit = () => {
                                 <div class="text-center mb-5">
                                     <router-link :to="{ name: 'HomePage' }">
                                         <img
-                                            src="@/assets/imgs/TMart-logo.png"
+                                            src="@/assets/imgs/logo.jpg"
                                             alt="Logo"
                                             width="150"
                                         />

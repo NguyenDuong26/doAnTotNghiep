@@ -46,7 +46,7 @@
             ></a>
         </div>
         <div class="copyright">
-            <p>&copy; 2024 - Bản quyền thuộc về TMart</p>
+            <p>&copy; 2025 - Bản quyền thuộc về RPY Shop</p>
         </div>
     </footer>
 </template>
