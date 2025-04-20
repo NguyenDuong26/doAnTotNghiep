@@ -36,9 +36,11 @@ export const useAuthStore = defineStore('auth', {
             localStorage.removeItem('user');
             const userStore = useUserStore();
             userStore.fetchLogout();
-            const requireAuth = route.meta.authenticate;
-            if (route && requireAuth) {
-                router.push({ name: 'Login', query: { redirect: route.fullPath } });
+            if (route) {
+                const requireAuth = route.meta.authenticate;
+                if (requireAuth) {
+                    router.push({ name: 'Login', query: { redirect: route.fullPath } });
+                }
             }
         },
 
