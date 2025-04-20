@@ -1,9 +1,9 @@
 <template>
     <header id="header">
         <div class="logo">
-            <router-link :to="{ name: 'HomePage' }">
-                <span>RPY</span>Shop
-            </router-link>
+            <router-link :to="{ name: 'HomePage' }"
+                ><span>T</span>Mart</router-link
+            >
         </div>
         <div class="search-box">
             <div class="search-box-item">
@@ -163,7 +163,7 @@ export default {
             }
         },
         handleLogout() {
-            this.authStore.fetchLogout();
+            this.authStore.fetchLogout(this.$route);
         },
     },
     async created() {
@@ -218,26 +218,26 @@ export default {
 }
 
 #header .logo {
-    width: 12%;
+    width: 10%;
 }
 
 #header .logo > a,
 #header .logo > a > span {
     font-family: cursive;
-    font-size: 2.3rem;
-    color: #2196f3;
+    font-size: 3rem;
+    color: var(--color-primary);
     cursor: pointer;
     text-decoration: none;
     font-weight: 600;
 }
 
 #header .logo > a > span {
-    color: #212121;
+    color: var(--color-orange);
 }
 
 #header .search-box {
     display: flex;
-    width: 60%;
+    width: 62%;
     justify-content: center;
     align-items: center;
 }

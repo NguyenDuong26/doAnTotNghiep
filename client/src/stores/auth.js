@@ -19,7 +19,6 @@ export const useAuthStore = defineStore('auth', {
                 const res = await authService.login(data);
                 if (res.status === 200) {
                     const user = JSON.stringify(res.data);
-                    console.log(user);
                     localStorage.setItem('user', user);
                     this.isLoggedIn = true;
                     const userStore = useUserStore();
@@ -32,11 +31,15 @@ export const useAuthStore = defineStore('auth', {
             }
         },
 
-        fetchLogout() {
+        fetchLogout(route) {
             this.isLoggedIn = false;
             localStorage.removeItem('user');
             const userStore = useUserStore();
             userStore.fetchLogout();
+            const requireAuth = route.meta.authenticate;
+            if (route && requireAuth) {
+                router.push({ name: 'Login', query: { redirect: route.fullPath } });
+            }
         },
 
         async fetchRegister(data) {
