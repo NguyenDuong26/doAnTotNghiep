@@ -5,10 +5,10 @@
 @import "./carousel.css";
 
 :root {
-    --color-primary: #006fff;
-    --color-primary-hover: #4696ff;
-    --color-primary-focus: #0138ff;
-    --color-primary-opacity: rgba(59, 144, 255, 0.2);
+    --color-primary: #cf5d0c;
+    --color-primary-hover: #da8e3c;
+    --color-primary-focus: #ff7904;
+    --color-primary-opacity: rgba(214, 173, 122, 0.2);
     --color-white: #ffff;
     --color-text: #27272a;
     --color-greyish: #ccc;

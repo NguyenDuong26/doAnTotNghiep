@@ -125,7 +125,7 @@ const onSubmit = () => {
                                 <div class="col-12">
                                     <div class="d-grid">
                                         <button
-                                            class="btn btn-primary btn-lg"
+                                            class="btn btn-login btn-lg"
                                             type="submit"
                                         >
                                             Đăng ký
@@ -164,5 +164,9 @@ const onSubmit = () => {
     display: flex;
     justify-content: center;
     align-items: center;
+}
+.btn-login{
+    background-color: var(--color-primary);
+    color: #fff;
 }
 </style>
