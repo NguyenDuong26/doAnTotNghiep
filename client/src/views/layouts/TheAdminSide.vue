@@ -1,13 +1,23 @@
 <script lang="js" setup>
 
 import { useAuthStore } from '@/stores/auth';
+import { ref } from 'vue';
 import { useRoute } from 'vue-router';
+import { useAppStore } from '../../stores/app';
+import { storeToRefs } from 'pinia';
 
 const authStore = useAuthStore();
 const route = useRoute();
+const appStore = useAppStore();
+const { extendSidebar } = storeToRefs(appStore);
 
 const handleLogout = () => {
     authStore.fetchLogout(route);
+}
+
+const handleToggleSidebar = () => {
+    appStore.fetchExtendSidebar();
+    document.documentElement.style.setProperty('--width-siderbar-admin', `${extendSidebar.value ? '250px' : '60px'}`);
 }
 </script>
 
@@ -15,60 +25,68 @@ const handleLogout = () => {
     <div class="admin-page">
         <div class="sidebar">
             <div class="sidebar-content">
-                <div class="logo">
-                    <router-link :to="{ name: 'HomePage' }">
-                        <span class="rpy">RPY</span>
-                        <span class="shop">Shop</span>
-                    </router-link>
+                <div class="content-header">
+                    <div v-if="extendSidebar" id="logo">
+                        <router-link :to="{ name: 'HomePage' }">
+                            <div class="logo-item">
+                                <span class="logo-name">RPYShop</span>
+                            </div>
+                        </router-link>
+                    </div>
+                    <div class="toggle" id="id-toggle" :style="{ width: `${extendSidebar ? '10%' : '100%'}` }">
+                        <button @click="handleToggleSidebar">
+                            <i :class="['fa-solid', `${extendSidebar ? 'fa-chevron-left' : 'fa-chevron-right'}`]"></i>
+                        </button>
+                    </div>
                 </div>
                 <ul>
                     <li>
-                        <router-link :to="{ name: 'HomeAdmin' }">
+                        <router-link :to="{ name: 'HomeAdmin' }" title="Trang chủ">
                             <i class="fa-solid fa-house"></i>
-                            Trang chủ
+                            <span v-if="extendSidebar">Trang chủ</span>
                         </router-link>
                     </li>
                     <li>
-                        <router-link :to="{ name: 'UserAdmin' }">
+                        <router-link :to="{ name: 'UserAdmin' }" title="Quản lý người dùng">
                             <i class="fa-solid fa-users-gear"></i>
-                            Quản lý người dùng
+                            <span v-if="extendSidebar">Quản lý người dùng</span>
                         </router-link>
                     </li>
                     <li>
-                        <router-link :to="{ name: 'CategoryAdmin' }">
+                        <router-link :to="{ name: 'CategoryAdmin' }" title="Quản lý danh mục">
                             <i class="fa-solid fa-list"></i>
-                            Quản lý danh mục
+                            <span v-if="extendSidebar">Quản lý danh mục</span>
                         </router-link>
                     </li>
                     <li>
-                        <router-link :to="{ name: 'ProductAdmin' }">
+                        <router-link :to="{ name: 'ProductAdmin' }" title="Quản lý sản phẩm">
                             <i class="fa-solid fa-box-archive"></i>
-                            Quản lý sản phẩm
+                            <span v-if="extendSidebar">Quản lý sản phẩm</span>
                         </router-link>
                     </li>
                     <li>
-                        <router-link :to="{ name: 'OrderAdmin' }">
+                        <router-link :to="{ name: 'OrderAdmin' }" title="Quản lý đơn hàng">
                             <i class="fa-solid fa-cart-shopping"></i>
-                            Quản lý đơn hàng
+                            <span v-if="extendSidebar">Quản lý đơn hàng</span>
                         </router-link>
                     </li>
                     <li>
-                        <router-link :to="{ name: 'GalleryAdmin' }">
+                        <router-link :to="{ name: 'GalleryAdmin' }" title="Quản lý trưng bày">
                             <i class="fa-solid fa-images"></i>
-                            Quản lý trưng bày
+                            <span v-if="extendSidebar">Quản lý trưng bày</span>
                         </router-link>
                     </li>
                     <li>
-                        <router-link :to="{ name: 'CouponAdmin' }">
+                        <router-link :to="{ name: 'CouponAdmin' }" title="Quản lý má giảm giá">
                             <i class="fa-solid fa-ticket"></i>
-                            Quản lý mã giảm giá
+                            <span v-if="extendSidebar">Quản lý mã giảm giá</span>
                         </router-link>
                     </li>
                 </ul>
             </div>
             <div class="sidebar-footer">
-                <button @click="handleLogout">
-                    Đăng xuất
+                <button @click="handleLogout" title="Đăng xuất">
+                    <span v-if="extendSidebar">Đăng xuất</span>
                     <i class="fa-solid fa-right-from-bracket"></i>
                 </button>
             </div>
@@ -89,14 +107,49 @@ const handleLogout = () => {
     flex-direction: column;
     justify-content: space-between;
     min-height: 100vh;
-    width: var(--width-sidebar);
+    width: var(--width-siderbar-admin);
     background-color: var(--color-primary);
     max-height: 100%;
     padding: 20px 0;
     padding-bottom: 5px;
 }
 
-.admin-page .sidebar .logo>a {
+.admin-page .sidebar .content-header {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 60px;
+    position: relative;
+}
+
+.admin-page .sidebar .content-header #logo {
+    width: 90%;
+}
+
+.admin-page .sidebar .content-header .toggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background-color: var(--color-primary);
+    z-index: 10;
+    width: 10%;
+}
+
+.admin-page .sidebar .content-header .toggle button {
+    background-color: transparent;
+    border: none;
+    color: var(--color-white);
+    cursor: pointer;
+    padding: 5px;
+    text-align: center;
+}
+
+.admin-page .sidebar .content-header .toggle i {
+    font-size: 1.4rem;
+}
+
+.admin-page .sidebar #logo a {
     display: block;
     text-align: center;
     font-size: 2rem;
@@ -105,12 +158,7 @@ const handleLogout = () => {
     padding: 5px 0;
 }
 
-.admin-page .sidebar .logo>a>.rpy {
-    color: var(--color-white);
-    font-size: 2rem;
-}
-
-.admin-page .sidebar .logo>a>.shop {
+.admin-page .sidebar #logo a .logo-item .logo-name {
     color: var(--color-white);
     font-size: 2rem;
     font-style: italic;
@@ -121,7 +169,7 @@ const handleLogout = () => {
 }
 
 .admin-page section {
-    width: calc(100% - var(--width-sidebar));
+    width: calc(100% - var(--width-siderbar-admin));
     height: 100%;
     padding: 20px 10px;
     position: relative;
