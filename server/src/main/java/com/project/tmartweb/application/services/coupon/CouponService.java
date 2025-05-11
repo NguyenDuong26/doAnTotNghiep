@@ -23,6 +23,7 @@ public class CouponService implements ICouponService {
     @Override
     public Coupon insert(CouponDTO couponDTO) {
         Coupon coupon = mapper.map(couponDTO, Coupon.class);
+        coupon.setCode(couponDTO.getCode().toUpperCase());
         return couponRepository.save(coupon);
     }
 
