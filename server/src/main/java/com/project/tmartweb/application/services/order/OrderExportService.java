@@ -1,7 +1,7 @@
 package com.project.tmartweb.application.services.order;
 
-import com.lowagie.text.Font;
 import com.lowagie.text.*;
+import com.lowagie.text.Font;
 import com.lowagie.text.pdf.BaseFont;
 import com.lowagie.text.pdf.PdfPCell;
 import com.lowagie.text.pdf.PdfPTable;
@@ -115,9 +115,57 @@ public class OrderExportService implements IOrderExportService {
             table.addCell(new Phrase(orderDetail.getProduct().getTitle(), contentFont));
             table.addCell(new Phrase(orderDetail.getClassify(), contentFont));
             table.addCell(new Phrase(Integer.toString(orderDetail.getQuantity()), contentFont));
-            table.addCell(new Phrase(decimalFormat.format(orderDetail.getPrice()) + "₫", contentFont));
-            table.addCell(new Phrase(decimalFormat.format(orderDetail.getTotalMoney()) + "₫", contentFont));
+
+            PdfPCell priceCell = new PdfPCell(new Phrase(decimalFormat.format(orderDetail.getPrice()) + "₫", contentFont));
+            priceCell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+            priceCell.setPaddingRight(5f);
+            table.addCell(priceCell);
+
+            PdfPCell totalMoneyCell = new PdfPCell(new Phrase(decimalFormat.format(orderDetail.getTotalMoney()) + "₫", contentFont));
+            totalMoneyCell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+            totalMoneyCell.setPaddingRight(5f);
+            table.addCell(totalMoneyCell);
             index++;
         }
+        Double totalPrice = orderDetails.stream()
+                .mapToDouble(OrderDetail::getTotalMoney)
+                .sum();
+
+        Double totalPricePay = order.getTotalMoney();
+
+        // Thêm dòng: Tổng số tiền
+        PdfPCell cell1 = new PdfPCell(new Phrase("Tổng tiền", contentFont));
+        cell1.setColspan(5); // Gộp 5 cột đầu
+        cell1.setHorizontalAlignment(Element.ALIGN_RIGHT);
+        cell1.setPadding(5);
+        table.addCell(cell1);
+
+        PdfPCell cell2 = new PdfPCell(new Phrase(decimalFormat.format(totalPrice) + "₫", contentFont));
+        cell2.setHorizontalAlignment(Element.ALIGN_RIGHT);
+        cell2.setPadding(5);
+        table.addCell(cell2);
+
+        PdfPCell cell3 = new PdfPCell(new Phrase("Giảm giá", contentFont));
+        cell3.setColspan(5); // Gộp 5 cột đầu
+        cell3.setHorizontalAlignment(Element.ALIGN_RIGHT);
+        cell3.setPadding(5);
+        table.addCell(cell3);
+
+        PdfPCell cell4 = new PdfPCell(new Phrase(
+                "-" + decimalFormat.format(totalPrice - totalPricePay) + "₫", contentFont));
+        cell4.setHorizontalAlignment(Element.ALIGN_RIGHT);
+        cell4.setPadding(5);
+        table.addCell(cell4);
+
+        PdfPCell cell5 = new PdfPCell(new Phrase("Tổng tiền phải trả", contentFont));
+        cell5.setColspan(5);
+        cell5.setHorizontalAlignment(Element.ALIGN_RIGHT);
+        cell5.setPadding(5);
+        table.addCell(cell5);
+
+        PdfPCell cell6 = new PdfPCell(new Phrase(decimalFormat.format(totalPricePay) + "₫", contentFont));
+        cell6.setHorizontalAlignment(Element.ALIGN_RIGHT);
+        cell6.setPadding(5);
+        table.addCell(cell6);
     }
 }
